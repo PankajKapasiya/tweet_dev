@@ -5,18 +5,22 @@ const tweetSchema = new mongoose.Schema({
         type :String,
         required: true,
     },
-    userEmail :{
-        type :String
-    },
-    comments:[
+    hashtags : [
         {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'Comment'
-            
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Hashtag'
         }
-    ]
+     ]
+    // userEmail :{
+    //     type :String
+    // },
+    // comments:[
+    //     {
+    //         type:mongoose.Schema.Types.ObjectId,
+    //         ref:'Comment'
+    //     }
+    // ]
 }, {timestamps : true});
 
 const Tweet = mongoose.model('Tweet', tweetSchema);
-
 module.exports= Tweet;

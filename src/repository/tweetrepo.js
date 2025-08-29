@@ -11,7 +11,6 @@ class tweetrepository{
             console.log(error);
             throw error;
         }
-
     }
 
     async get(id){
@@ -28,6 +27,7 @@ class tweetrepository{
     async getidcomments(id){
         try{
             const tweet= await Tweet.findById(id).populate({path:'comments'});
+            console.log('find comment');
             return tweet;
         }
         catch(error){

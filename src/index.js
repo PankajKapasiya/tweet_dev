@@ -1,5 +1,4 @@
 const express = require('express');
-
 const connect = require('./config/database');
 const app = express();
 
@@ -23,8 +22,8 @@ app.listen(3000 , async () =>{
     // const tweet= await tweetrepo.destroy('689f092223dc3c5ae49b60cd');
 
     const tweetrepo =new tweetrepository();
-    // const tweet = await tweetrepo.create({content: 'Created a new tweet'});
-    const tweet = await tweetrepo.getidcomments('689f3aa6f5325b3fbf52e304')
+    const tweet = await tweetrepo.create({content: 'Created a new tweet'});
+    // const tweet = await tweetrepo.getidcomments('689f3aa6f5325b3fbf52e304')
     console.log(tweet);
 
     // const comment = await Comment.create({content : 'new comment'});
