@@ -13,6 +13,15 @@ class hashtagrepository{
         }
     }
     
+    async bulkCreate(data){
+        try {
+            // data array of object
+            const tags = await Hashtag.insertMany(data);
+            return tags;
+        } catch (error) {
+            console.log(error);
+        }
+    }
     async update(id,tweet_id){
         try{
            const response= await Hashtag.findByIdAndUpdate(
@@ -58,6 +67,18 @@ class hashtagrepository{
         catch(error){
             console.log(error);
             throw error;
+        }
+    }
+
+    async findByName(titleList){
+        try {
+            const tags = await Hashtag.find({
+                title :titleList
+            });
+            //return array of object
+            return tags;
+        } catch (error) {
+            console.log(error);
         }
     }
 }

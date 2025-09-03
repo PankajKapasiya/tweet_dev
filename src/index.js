@@ -19,7 +19,7 @@ app.listen(3000 , async () =>{
     //     userEmail :'a@b.com'
     // });
     // const tweetser = new tweetService();
-    // const res = await tweetser.create({content :'#today is 30 august and #pankaj is in #trend'});
+    // const res = await tweetser.create({content :'#today is 3 Sept and #pankaj is in #trend as well #famous'});
     // console.log(res);
 
     // console.log(response);

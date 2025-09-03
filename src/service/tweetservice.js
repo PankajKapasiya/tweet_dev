@@ -8,32 +8,29 @@ class tweetService{
         this.tweetrepo = new tweetrepository();
         this.hashrepo = new hashtagrepository();
     }
-    
+
     async create(data){
         try{
             const content = data.content;
-            const tags = content.match(/#[a-zA-Z0-9]+/g);
-            console.log(tags);
+            const tags = content.match(/#[a-zA-Z0-9]+/g).map((tag) => tag.substring(1).toLowerCase());
+            // console.log(tags);
             const tweet = await this.tweetrepo.create(data);
-            const tweet_id=tweet._id;
-            for(let i=0; i<tags.length; i++){
-                // console.log(tag1s[i]);
-                const res = await this.hashrepo.find({title : tags[i]});
-                if(res.length==0){
-                    // console.log(res.length);
-                    await this.hashrepo.create({title : tags[i]});
-                }
-            }
-            // const response = await this.hashrepo.find({title :tags[0]});
-            // console.log(response[0]._id);
-            // const idis=response[0]._id;
-            // console.log(idis);
-            // const res1=await this.hashrepo.update(idis, tweet_id);
-            for(let i=0; i<tags.length; i++){
-                const response = await this.hashrepo.find({title :tags[i]});
-                this.tweetrepo.update_hash(tweet_id,response[0]._id);
-                const res1=await this.hashrepo.update(response[0]._id, tweet_id);
-            }
+            let alreadyPresentTags = await this.hashrepo.findByName(tags);
+            console.log('already present tags',alreadyPresentTags);
+            let titleOfPresenttags = alreadyPresentTags.map(tags => tags.title);
+            console.log(titleOfPresenttags);
+            let newTags = tags.filter(tag => !titleOfPresenttags.includes(tag));
+            newTags = newTags.map(tag => {
+                return {title :tag, tweets :[tweet.id]};
+            });
+
+            await this.hashrepo.bulkCreate(newTags);
+
+            alreadyPresentTags.forEach((tag) =>{
+                tag.tweets.push(tweet.id);
+                tag.save();
+            });
+
             return tweet;
         }
         catch(error){
@@ -41,6 +38,7 @@ class tweetService{
             throw error;
         }
     }
+
      async destory_by_content(data){
         try{
             const tweet = await this.tweetrepo.destory_by_content(data);
