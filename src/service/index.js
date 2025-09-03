@@ -1,5 +1,5 @@
-const tweetService = require('./tweetservice');
+import tweetService from './tweetservice.js';
 
-module.exports ={
-    tweetService,
+export {
+    tweetService
 }

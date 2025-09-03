@@ -1,6 +1,5 @@
-const {tweetrepository} = require('../repository/index');
+import {tweetrepository,hashtagrepository} from '../repository/index.js';
 
-const {hashtagrepository}= require('../repository/index');
 // const Hashtag = require('../models/hashtags');
 class tweetService{
 
@@ -30,7 +29,6 @@ class tweetService{
                 tag.tweets.push(tweet.id);
                 tag.save();
             });
-
             return tweet;
         }
         catch(error){
@@ -61,4 +59,4 @@ class tweetService{
     }
 };
 
-module.exports =tweetService;
+export default tweetService;

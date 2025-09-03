@@ -1,13 +1,13 @@
-const express = require('express');
-const connect = require('./config/database');
+import express from 'express';
+import connect from './config/database.js';
 const app = express();
 
-const Tweet =require('./models/tweet');
+// import Tweet from './models/tweet.js';
 
-const Comment = require('./models/comment');
+// const Comment = require('./models/comment');
 
-const {tweetService} = require('./service/index');
-const {hashtagrepository} = require('./repository/index');
+import {tweetService} from './service/index.js';
+// const {hashtagrepository} = require('./repository/index');
 
 app.listen(3000 , async () =>{
     console.log(`server started`);
@@ -17,9 +17,9 @@ app.listen(3000 , async () =>{
     // const tweet = await Tweet.create({
     //     content :'First tweet',
     //     userEmail :'a@b.com'
-    // });
-    // const tweetser = new tweetService();
-    // const res = await tweetser.create({content :'#today is 3 Sept and #pankaj is in #trend as well #famous'});
+
+    const tweetser = new tweetService();
+    const res = await tweetser.create({content :'this is #refactor module'});
     // console.log(res);
 
     // console.log(response);
