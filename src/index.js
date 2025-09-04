@@ -1,5 +1,8 @@
 import express from 'express';
 import connect from './config/database.js';
+import bodyParser from 'body-parser';
+
+import apiroutes from './routes/index.js';
 const app = express();
 
 // import Tweet from './models/tweet.js';
@@ -9,6 +12,10 @@ const app = express();
 import {tweetService} from './service/index.js';
 // const {hashtagrepository} = require('./repository/index');
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
+app.use('/api', apiroutes);
 app.listen(3000 , async () =>{
     console.log(`server started`);
     await connect();
@@ -18,8 +25,8 @@ app.listen(3000 , async () =>{
     //     content :'First tweet',
     //     userEmail :'a@b.com'
 
-    const tweetser = new tweetService();
-    const res = await tweetser.create({content :'this is #refactor module'});
+    // const tweetser = new tweetService();
+    // const res = await tweetser.create({content :'this is #refactor module'});
     // console.log(res);
 
     // console.log(response);

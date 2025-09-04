@@ -1,28 +1,12 @@
 import Tweet from '../models/tweet.js';
+import crudrepo from './crud-repository.js';
 
-class tweetrepository{
-    async create(data){
-        try{
-            const tweet= await Tweet.create(data);
-            return tweet;
-        }
-        catch(error){
-            console.log(error);
-            throw error;
-        }
+class tweetrepository extends crudrepo {
+
+    constructor(){
+        super(Tweet);
     }
-
-    async get(id){
-         try{
-            const tweet= await Tweet.findById(id);
-            return tweet;
-        }
-        catch(error){
-            console.log(error);
-            throw error;
-        }
-    }
-
+    
     async getidcomments(id){
         try{
             const tweet= await Tweet.findById(id).populate({path:'comments'});
@@ -34,31 +18,22 @@ class tweetrepository{
             throw error;
         }
     }
-     async update_hash(id,hash_id){
-            try{
-               const response= await Tweet.findByIdAndUpdate(
+    async update_hash(id,hash_id){
+        try{
+            const response= await Tweet.findByIdAndUpdate(
                         id,   // the hashtag _id
                         { $push: { hashtags: hash_id } },
                         { new: true }  // returns the updated document
-                );
-                return response;
-            }
-            catch(error){
-                console.log(error);
-                throw error;
-            }
-    
-        }
-    async update(id, data){
-         try{
-            const tweet= await Tweet.findByIdAndUpdate(id, data);
-            return tweet;
+            );
+            return response;
         }
         catch(error){
             console.log(error);
             throw error;
         }
+    
     }
+    
     async destory_by_content(data){
         try{
             const response = await Tweet.find({content : data });
@@ -71,16 +46,6 @@ class tweetrepository{
             return response;
         }
         catch(error){
-            throw error;
-        }
-    }
-    async destroy(id){
-         try{
-            const tweet= await Tweet.findByIdAndDelete(id);
-            return tweet;
-        }
-        catch(error){
-            console.log(error);
             throw error;
         }
     }
